@@ -4,22 +4,17 @@
 
 @section('content')
 {{-- @if (count($posts)) --}}
-
-@forelse ($posts as $key => $post)
+@each('posts.partials.post', $posts, 'post')
+{{-- @forelse ($posts as $key => $post)
 {{-- <div> {{ $key }} . {{ $post['title'] }}</div> --}}
 {{-- @break($key == 2) --}}
 {{-- @continue($key = 1) --}}
+    {{-- @include('posts.partials.post', []) --}}
 
-@if ($loop->even)
-    <div>{{ $key }} . {{ $post['title'] }}</div>
-@else 
-    <div style="color: red">{{ $key }} . {{ $post['title'] }}</div>
-@endif
+{{-- @empty
+No posts found! --}}
 
-@empty
-No posts found!
-
-@endforelse
+{{-- @endforelse --}} 
 
 {{-- @else
 No posts found! --}}
