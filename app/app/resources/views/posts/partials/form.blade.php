@@ -1,11 +1,11 @@
 <div>
-    <input type="text" name="title" value="{{ old('title') }}">
+    <input type="text" name="title" value="{{ old('title', optional($post ?? null)->title) }}">
 </div>
 @error('title')
     <div>{{ $message }}</div>
 @enderror
 <div>
-    <textarea name="content">{{ old('content') }}</textarea>
+    <textarea name="content">{{ old('content', optional($post ?? null)->title) }}</textarea>
 </div>
 @if ($errors->any())
     <div>
