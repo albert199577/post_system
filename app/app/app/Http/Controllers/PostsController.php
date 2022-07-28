@@ -109,7 +109,7 @@ class PostsController extends Controller
         $post->save();
 
         $request->session()->flash('status', 'The blog post was updated!');
-        
+
         return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
@@ -121,6 +121,11 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = BlogPost::findOrFail($id);
+        $post->delete();
+
+        session()->flash('status', 'The blog post was deleted!');
+
+        return redirect()->route('posts.index');
     }
 }
