@@ -55,7 +55,8 @@ Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
 $strs = ["abca","aba","aaab"];
 
 Route::get('/test', function () use ($strs) {
-    
+    // return time();
+    // return date('Y-m-d h:i:s', 1680361214);
 });
 
 // Route::prefix('/fun')->name('fun.')->group(function () use($posts) {

@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="d-flex justify-content-between shadow-sm">
-        <h5 class="mx-3">Laravel App</h5>
+        <h5 class="mx-3"><a href=" {{ route('posts.index') }}">Laravel App</a></h5>
         <nav class="mx-3">
             <a href="{{ route('home.index') }}" class="mx-2">Home</a>
             <a href="{{ route('home.contact') }}" class="mx-2">Contact</a>
@@ -20,9 +20,9 @@
     </div>
     <div class="container">
         @if (session('status'))
-            <p style="color: 777">
+            <div class="alert alert-success">
                 {{ session('status') }}
-            </p>
+            </div>
         @endif
         @yield('content')
     </div>

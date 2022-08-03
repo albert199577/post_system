@@ -1,12 +1,13 @@
 {{-- @if ($loop->even) --}}
-    <div>{{ $key }} . {{ $post['title'] }}</div>
+    <h3><a class="text-secondary" href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post['title'] }}</a></h3>
 {{-- @else 
     <div style="color: red">{{ $key }} . {{ $post['title'] }}</div>
 @endif --}}
-<div>
+<div class="d-flex mb-3">
+    <a class="btn btn-success text-light" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
     <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
         @csrf
         @method('DELETE')
-        <button type="submit">Delete!</button>
+        <button class="btn btn-info text-light" type="submit">Delete!</button>
     </form>
 </div>
