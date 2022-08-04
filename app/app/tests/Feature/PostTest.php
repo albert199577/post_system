@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\BlogPost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Carbon\Carbon;
 use Tests\TestCase;
 
 class PostTest extends TestCase
@@ -73,5 +73,18 @@ class PostTest extends TestCase
         $this->assertEquals($messages['title'][0], 'The title must be at least 5 characters.');
         $this->assertEquals($messages['content'][0], 'The content must be at least 10 characters.');
 
+    }
+
+    public function testUpdateVaild()
+    {
+        $post = new BlogPost();
+        $post->title = 'New title';
+        $post->content = 'Content of the blog post';
+        $post->updated_at = Carbon::now()->timestamp;
+        $post->created_at = Carbon::now()->timestamp;
+        $post->save();
+
+        // Assert
+        $this->assertDatabaseHas('blog_posts', $post->toArray());
     }
 }
