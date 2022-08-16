@@ -27,10 +27,7 @@ class PostTest extends TestCase
 
     public function testNoBlogPostsWhenThereIs1()
     {
-        $post = new BlogPost();
-        $post->title = 'New title';
-        $post->content = 'Content of the blog post';
-        $post->save();
+        $post = $this->createDummyBlogPost();
 
         // Act
         $response = $this->get('/posts');
@@ -80,10 +77,7 @@ class PostTest extends TestCase
     {
         $carbon = Carbon::now(new DateTimeZone('Asia/Taipei'));
 
-        $post = new BlogPost();
-        $post->title = 'New title';
-        $post->content = 'Content of the blog post';
-        $post->save();
+        $post = $this->createDummyBlogPost();
 
         // Assert
         $this->assertDatabaseHas('blog_posts', [
@@ -117,4 +111,43 @@ class PostTest extends TestCase
             'created_at' => $carbon->now(),
         ]);
     }
+
+    public function testDelete()
+    {
+        $carbon = Carbon::now(new DateTimeZone('Asia/Taipei'));
+
+        $post = $this->createDummyBlogPost();
+
+        $this->assertDatabaseHas('blog_posts', [
+            'title' => 'New title',
+            'content' => 'Content of the blog post',
+            'updated_at' => $carbon->now(),
+            'created_at' => $carbon->now(),
+        ]);
+        
+        $this->delete("/posts/{$post->id}")
+            ->assertStatus(302)
+            ->assertSessionHas('status');
+
+        $this->assertEquals(session('status'), 'The blog post was deleted!');
+
+        $this->assertDatabaseMissing('blog_posts', [
+            'title' => 'New title',
+            'content' => 'Content of the blog post',
+            'updated_at' => $carbon->now(),
+            'created_at' => $carbon->now(),
+        ]);
+    }
+
+    public function createDummyBlogPost(): BlogPost
+    {
+        $post = new BlogPost();
+        $post->title = 'New title';
+        $post->content = 'Content of the blog post';
+        $post->save();
+
+        return $post;
+    }
+
+
 }
