@@ -5,10 +5,11 @@ namespace Tests\Feature;
 use App\Models\BlogPost;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Carbon\Carbon;
+use DateTimeZone;
 use Tests\TestCase;
 
 class PostTest extends TestCase
-{
+{   
     use RefreshDatabase;
 
     /**
@@ -77,14 +78,43 @@ class PostTest extends TestCase
 
     public function testUpdateVaild()
     {
+        $carbon = Carbon::now(new DateTimeZone('Asia/Taipei'));
+
         $post = new BlogPost();
         $post->title = 'New title';
         $post->content = 'Content of the blog post';
-        $post->updated_at = Carbon::now()->timestamp;
-        $post->created_at = Carbon::now()->timestamp;
         $post->save();
 
         // Assert
-        $this->assertDatabaseHas('blog_posts', $post->toArray());
+        $this->assertDatabaseHas('blog_posts', [
+            'title' => 'New title',
+            'content' => 'Content of the blog post',
+            'updated_at' => $carbon->now(),
+            'created_at' => $carbon->now(),
+        ]);
+        
+        $params = [
+            'title' => 'a new named title',
+            'content' => 'Content was changed',
+        ];
+
+        $this->put("/posts/{$post->id}", $params)
+            ->assertStatus(302)
+            ->assertSessionHas('status');
+
+        $this->assertEquals(session('status'), 'The blog post was updated!');
+        $this->assertDatabaseMissing('blog_posts', [
+            'title' => 'New title',
+            'content' => 'Content of the blog post',
+            'updated_at' => $carbon->now(),
+            'created_at' => $carbon->now(),
+        ]);
+
+        $this->assertDatabaseHas('blog_posts', [
+            'title' => 'a new named title',
+            'content' => 'Content was changed',
+            'updated_at' => $carbon->now(),
+            'created_at' => $carbon->now(),
+        ]);
     }
 }
