@@ -3,6 +3,12 @@
 {{-- @else 
     <div style="color: red">{{ $key }} . {{ $post['title'] }}</div>
 @endif --}}
+@if ($post->comments_count)
+    <p>{{ $post->comments_count }} comments</p>
+@else
+    No comments yet!
+@endif
+
 <div class="d-flex mb-3">
     <a class="btn btn-success text-light" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
     <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
