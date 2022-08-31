@@ -162,6 +162,8 @@ class PostTest extends TestCase
         $post->content = 'Content of the blog post';
         $post->save();
 
+        $post = BlogPost::factory()->newTitle()->create();
+
         return $post;
     }
 
