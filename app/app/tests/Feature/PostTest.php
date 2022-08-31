@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\Models\BlogPost;
+use App\Models\Comment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Carbon\Carbon;
+use Carbon\Factory;
 use DateTimeZone;
 use Tests\TestCase;
 
@@ -25,7 +27,7 @@ class PostTest extends TestCase
     //     $response->assertSeeText('No blog posts yet!');
     // }
 
-    public function testNoBlogPostsWhenThereIs1()
+    public function testNoBlogPostsWhenThereIs1WithNoComment()
     {
         $post = $this->createDummyBlogPost();
 
@@ -40,6 +42,20 @@ class PostTest extends TestCase
         ]);
     }
 
+    public function testSee1BlogPostWithComments()
+    {
+
+        $post = $this->createDummyBlogPost();
+
+        Comment::factory()->count(3)->create([
+            'blog_post_id' => $post->id
+        ]);
+
+        $response = $this->get('/posts');
+
+        $response->assertSeeText('3 comments');
+
+    }
     public function testStoreVaild()
     {
         $params = [
