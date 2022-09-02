@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Http\Request;
@@ -37,6 +38,8 @@ Route::get('/single', [AboutController::class, '__invoke'])->name('single');
 
 
 Route::resource('posts', PostsController::class);
+
+Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
 
 
 // Route::get('/posts', function() use ($posts) {

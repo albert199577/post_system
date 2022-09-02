@@ -33,6 +33,8 @@
     @empty
         <p>No comments yet!</p>
     @endforelse
+
+    @include('posts.partials.comment')
 {{-- @isset($post['has_comments'])
 <div>The post has some comments ... using isset</div>
 @endisset --}}
