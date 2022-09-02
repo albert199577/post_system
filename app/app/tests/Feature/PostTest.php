@@ -103,8 +103,8 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('blog_posts', [
             'title' => 'New title',
             'content' => 'Content of the blog post',
-            'updated_at' => $carbon->now(),
-            'created_at' => $carbon->now(),
+            'updated_at' => $carbon,
+            'created_at' => $carbon,
         ]);
         
         $params = [
@@ -121,15 +121,15 @@ class PostTest extends TestCase
         $this->assertDatabaseMissing('blog_posts', [
             'title' => 'New title',
             'content' => 'Content of the blog post',
-            'updated_at' => $carbon->now(),
-            'created_at' => $carbon->now(),
+            'updated_at' => $carbon,
+            'created_at' => $carbon,
         ]);
 
         $this->assertDatabaseHas('blog_posts', [
             'title' => 'a new named title',
             'content' => 'Content was changed',
-            'updated_at' => $carbon->now(),
-            'created_at' => $carbon->now(),
+            'updated_at' => $carbon,
+            'created_at' => $carbon,
         ]);
     }
 
@@ -142,8 +142,8 @@ class PostTest extends TestCase
         $this->assertDatabaseHas('blog_posts', [
             'title' => 'New title',
             'content' => 'Content of the blog post',
-            'updated_at' => $carbon->now(),
-            'created_at' => $carbon->now(),
+            'updated_at' => $carbon,
+            'created_at' => $carbon,
         ]);
         
         $this->actingAs($this->user())
@@ -156,17 +156,17 @@ class PostTest extends TestCase
         $this->assertDatabaseMissing('blog_posts', [
             'title' => 'New title',
             'content' => 'Content of the blog post',
-            'updated_at' => $carbon->now(),
-            'created_at' => $carbon->now(),
+            'updated_at' => $carbon,
+            'created_at' => $carbon,
         ]);
     }
 
     public function createDummyBlogPost(): BlogPost
     {
-        $post = new BlogPost();
-        $post->title = 'New title';
-        $post->content = 'Content of the blog post';
-        $post->save();
+        // $post = new BlogPost();
+        // $post->title = 'New title';
+        // $post->content = 'Content of the blog post';
+        // $post->save();
 
         $post = BlogPost::factory()->newTitle()->create();
 

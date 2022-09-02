@@ -23,8 +23,8 @@ class BlogPostFactory extends Factory
         return [
             'title' => $this->faker->sentence(10),
             'content' => $this->faker->paragraphs(5, true),
-            'updated_at' => $carbon->now(),
-            'created_at' => $carbon->now(),
+            'updated_at' => $carbon,
+            'created_at' => $carbon,
         ];
     }
 
