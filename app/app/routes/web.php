@@ -25,7 +25,11 @@ use Illuminate\Support\Facades\Auth;
 //     return view('home.contact', []);
 // })->name('home.contact');
 
-Route::get('/', [HomeController::class, 'home'])->name('home.index');
+// Route::get('/', 'HomeController@home')->name('home')->middleware('auth');
+Route::get('/', [HomeController::class, 'home'])->name('home.index')
+// ->middleware('auth')
+;
+
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
 Route::get('/single', [AboutController::class, '__invoke'])->name('single');

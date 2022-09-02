@@ -16,6 +16,20 @@
             <a href="{{ route('home.contact') }}" class="mx-2">Contact</a>
             <a href="{{ route('posts.index') }}" class="mx-2">Blog Posts</a>
             <a href="{{ route('posts.create') }}" class="mx-2">Add Blog Post</a>
+
+            @guest
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="mx-2">Register</a>
+                @endif
+                <a href="{{ route('login') }}"
+                    class="mx-2">Login</a>
+            @else
+                <a href="{{ route('logout') }}" class="mx-2"
+                    onclick="event.preventDefault(); document.querySelector('#logout-form').submit();">Logout ({{ Auth::user()->name }})</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            @endguest
         </nav>
     </div>
     <div class="container">
