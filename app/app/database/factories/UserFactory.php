@@ -36,4 +36,12 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function Bob()
+    {
+        return $this->state([
+            'name' => 'Bob',
+            'email' => 'Bob@gmail.com',
+        ]);
+    }
 }
