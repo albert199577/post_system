@@ -173,5 +173,4 @@ class PostTest extends TestCase
         return $post;
     }
 
-
 }

@@ -14,7 +14,12 @@ class AddUserToBlogPostsTable extends Migration
     public function up()
     {
         Schema::table('blog_posts', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id')->nullable();
+            // $table->unsignedBigInteger('user_id')->nullable();
+            
+
+            (env('DB_CONNECTION') === 'sqlite_testing')
+                ? $table->unsignedBigInteger('user_id')->default('')
+                : $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')
             ->references('id')->on('users');
