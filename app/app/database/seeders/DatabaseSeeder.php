@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 // use Illuminate\Support\Facades\DB; 
 // use Illuminate\Support\Str;
 use App\Models\User;
+use App\Models\BlogPost;
+use App\Models\Comment;
 
 
 class DatabaseSeeder extends Seeder
@@ -28,12 +30,21 @@ class DatabaseSeeder extends Seeder
 
         $doe = User::factory(20)->create();
 
-        $else = User::factory()->Bob()->create();
+        $else = User::factory(1)->Bob()->create();
 
         // dd(get_class($doe), get_class($else));
+        $users = $else->concat($doe);
+        $posts = BlogPost::factory(50)->make()->each(function ($post) use($users) {
+            $post->user_id = $users->random()->id;
+            $post->save();
+            // $post->user()->associate($users->random())->save();
+        });
 
-        $users = $else->concat([$doe]);
-
-        dd($users->count());
+        $comments = Comment::factory(150)->make()->each(function ($comment) use($posts) {
+            $comment->blog_post_id = $posts->random()->id;
+            $comment->save();
+        });
+        
+        dd($posts->count());
     }
 }
