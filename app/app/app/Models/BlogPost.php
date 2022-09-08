@@ -23,8 +23,13 @@ class BlogPost extends Model
     {
         parent::boot();
 
-        // static::deleting(function (BlogPost $blogPost) {
-        //     $blogPost->comments()->delete();
-        // });
+        static::deleting(function (BlogPost $blogPost) {
+            $blogPost->comments()->delete();
+        });
+
+        static::restoring(function (BlogPost $blogPost) {
+            $blogPost->comments()->restore();
+        });
+
     }
 }
