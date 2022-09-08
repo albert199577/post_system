@@ -85,6 +85,7 @@ class PostsController extends Controller
         // $post = new BlogPost();
         // $post->title = $validated['title'];
         // $post->content = $validated['content'];
+        $this->authorize('posts.create', $post);
 
         // $post->save();
         $request->session()->flash('status', 'The blog post was created!');
@@ -117,7 +118,7 @@ class PostsController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('update-post', $post);
+        $this->authorize('posts.update', $post);
         
         // if (Gate::denies('update-post', $post)) {
         //     abort(403, "You can't edit this blog post");
@@ -137,7 +138,7 @@ class PostsController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('update-post', $post);
+        $this->authorize('posts.update', $post);
 
         // if (Gate::denies('update-post', $post)) {
         //     abort(403, "You can't edit this blog post");
@@ -162,7 +163,7 @@ class PostsController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('delete-post', $post);
+        $this->authorize('posts.delete', $post);
 
         // if (Gate::denies('delete-post', $post)) {
         //     abort(403, "You can't delete this blog post");
