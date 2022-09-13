@@ -85,7 +85,7 @@ class PostsController extends Controller
         // $post = new BlogPost();
         // $post->title = $validated['title'];
         // $post->content = $validated['content'];
-        $this->authorize('posts.create', $post);
+        $this->authorize($post);
 
         // $post->save();
         $request->session()->flash('status', 'The blog post was created!');
