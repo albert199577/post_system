@@ -12,10 +12,14 @@
 {{-- @else 
     <div style="color: red">{{ $key }} . {{ $post['title'] }}</div>
 @endif --}}
-<p class="text-muted">
+{{-- <p class="text-muted">
     added {{ $post->created_at->diffForHumans() }}
     by {{ $post->user->name }}
-</p>
+</p> --}}
+
+<x-updated :date="$post->created_at" :name="$post->user->name">
+    Added
+</x-updated>
 @if ($post->comments_count)
     <p>{{ $post->comments_count }} comments</p>
 @else

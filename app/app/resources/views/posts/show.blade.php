@@ -21,7 +21,13 @@
         </x-badge>
     </h1>
     <p>{{ $post->content }}</p>
-    <p>Added {{ $post->created_at->diffForHumans() }}</p>
+    {{-- <p>Added {{ $post->created_at->diffForHumans() }}</p> --}}
+    <x-updated :date="$post->created_at" :name="$post->user->name">
+        Added
+    </x-updated>
+    <x-updated :date="$post->updated_at">
+        Updated
+    </x-updated>
 
     <h4>Comments</h4>
 
@@ -29,9 +35,12 @@
         <p>
             {{ $comment->content }}
         </p>
-        <p class="text-muted">
+        {{-- <p class="text-muted">
             added {{ $comment->created_at->diffForHumans() }}
-        </p>
+        </p> --}}
+        <x-updated :date="$comment->created_at">
+            Added
+        </x-updated>
     @empty
         <p>No comments yet!</p>
     @endforelse
