@@ -1,5 +1,14 @@
 {{-- @if ($loop->even) --}}
-    <h3><a class="text-secondary" href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post['title'] }}</a></h3>
+
+    <h3>
+        @if($post->trashed())
+            <del>
+        @endif
+        <a class="{{ $post->trashed() ? 'text-muted' : '' }}" href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post['title'] }}</a>
+        @if($post->trashed())
+            </del>
+        @endif
+    </h3>
 {{-- @else 
     <div style="color: red">{{ $key }} . {{ $post['title'] }}</div>
 @endif --}}
@@ -17,14 +26,16 @@
     @can('update', $post)
         <a class="btn btn-success text-light" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
     @endcan
-    
-    @can('delete', $post)
-        <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-info text-light" type="submit">Delete!</button>
-        </form>
-    @endcan
+    @if(!$post->trashed())
+        @can('delete', $post)
+            <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-info text-light" type="submit">Delete!</button>
+            </form>
+        @endcan
+    @endif
+
 </div>
 
 @cannot('delete', $post)

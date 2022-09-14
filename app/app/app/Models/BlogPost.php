@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Scopes\LatestScope;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
+use App\Scopes\DeleteAdminScope;
 
 class BlogPost extends Model
 {
@@ -39,6 +40,8 @@ class BlogPost extends Model
 
     public static function boot()
     {
+        static::addGlobalScope(new DeleteAdminScope);
+        
         parent::boot();
 
         // static::addGlobalScope(new LatestScope);
