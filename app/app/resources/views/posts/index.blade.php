@@ -4,20 +4,42 @@
 
 @section('content')
 {{-- @if (count($posts)) --}}
-@each('posts.partials.post', $posts, 'post')
-{{-- @forelse ($posts as $key => $post)
-{{-- <div> {{ $key }} . {{ $post['title'] }}</div> --}}
-{{-- @break($key == 2) --}}
-{{-- @continue($key = 1) --}}
-    {{-- @include('posts.partials.post', []) --}}
+<div class="row">
+    <div class="col-8">
 
-{{-- @empty
-No posts found! --}}
+    @each('posts.partials.post', $posts, 'post')
+    {{-- @forelse ($posts as $key => $post)
+    {{-- <div> {{ $key }} . {{ $post['title'] }}</div> --}}
+    {{-- @break($key == 2) --}}
+    {{-- @continue($key = 1) --}}
+        {{-- @include('posts.partials.post', []) --}}
 
-{{-- @endforelse --}} 
+    {{-- @empty
+    No posts found! --}}
 
-{{-- @else
-No posts found! --}}
-{{-- @endif --}}
+    {{-- @endforelse --}} 
+
+    {{-- @else
+    No posts found! --}}
+    {{-- @endif --}}
+    </div>
+    <div class="col-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Most Commented</h5>
+                <h6 class="card-subtitle mb-2 text-muted">What people are currently talking about</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach ($mostCommented as $post)
+                    <li class="list-group-item">
+                        <a href="{{ route('posts.show', ['post' => $post->id]) }}">
+                            {{ $post->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
 
 @endsection
