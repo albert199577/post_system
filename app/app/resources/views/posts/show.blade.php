@@ -14,14 +14,14 @@
 <div>It is an old post ... using unless</div>
 @endunless --}}
 
-    <h1>{{ $post->title }}</h1>
-    <p>{{ $post->content }}</p>
-    <p>Added {{ $post->created_at->diffForHumans() }}</p>
-    @if (now()->diffInMinutes($post->created_at) < 5)
-        <x-badge type='danger'>
+    <h1>
+        {{ $post->title }}
+        <x-badge type='danger' show="{{ now()->diffInMinutes($post->created_at) < 20 }}">
             New!
         </x-badge>
-    @endif
+    </h1>
+    <p>{{ $post->content }}</p>
+    <p>Added {{ $post->created_at->diffForHumans() }}</p>
 
     <h4>Comments</h4>
 
