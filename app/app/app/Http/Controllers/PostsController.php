@@ -102,6 +102,22 @@ class PostsController extends Controller
     }
 
     /**
+     * Restore a resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $post = BlogPost::findOrFail($id);
+        
+        $post->restore();
+        session()->flash('status', 'The blog post was restored!');
+
+        return redirect()->route('posts.index');
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id

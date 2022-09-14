@@ -34,6 +34,12 @@
                 <button class="btn btn-info text-light" type="submit">Delete!</button>
             </form>
         @endcan
+    @else
+        <form action="{{ route('posts.restore', ['post' => $post->id]) }}" method="POST">
+            @csrf
+            @method('POST')
+            <button class="btn btn-info text-light" type="submit">Restore!</button>
+        </form>
     @endif
 
 </div>

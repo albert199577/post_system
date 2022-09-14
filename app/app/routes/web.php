@@ -43,6 +43,8 @@ Route::get('/single', [AboutController::class, '__invoke'])->name('single');
 
 Route::resource('posts', PostsController::class);
 
+Route::post('posts/{post}', [PostsController::class, 'restore'])->name('posts.restore');
+
 Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
 
 
