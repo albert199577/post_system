@@ -119,7 +119,7 @@ class PostTest extends TestCase
             'title' => 'a new named title',
             'content' => 'Content was changed',
             'updated_at' => $carbon,
-            'created_at' => $carbon,
+            'created_at' => $post->created_at,
         ]);
     }
 
