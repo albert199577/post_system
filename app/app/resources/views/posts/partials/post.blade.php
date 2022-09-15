@@ -27,24 +27,29 @@
 @endif
 
 <div class="d-flex mb-3">
-    @can('update', $post)
-        <a class="btn btn-success text-light" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
-    @endcan
-    @if(!$post->trashed())
-        @can('delete', $post)
-            <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-info text-light" type="submit">Delete!</button>
-            </form>
+    @auth
+        @can('update', $post)
+            <a class="btn btn-success text-light" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
         @endcan
-    @else
-        <form action="{{ route('posts.restore', ['post' => $post->id]) }}" method="POST">
-            @csrf
-            @method('POST')
-            <button class="btn btn-info text-light" type="submit">Restore!</button>
-        </form>
-    @endif
+    @endauth
+    @auth
+        @if(!$post->trashed())
+            @can('delete', $post)
+                <form action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-info text-light" type="submit">Delete!</button>
+                </form>
+            @endcan
+        @else
+            <form action="{{ route('posts.restore', ['post' => $post->id]) }}" method="POST">
+                @csrf
+                @method('POST')
+                <button class="btn btn-info text-light" type="submit">Restore!</button>
+            </form>
+        @endif
+    @endauth
+
 
 </div>
 
