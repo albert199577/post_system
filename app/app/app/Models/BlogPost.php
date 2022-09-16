@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use App\Scopes\DeleteAdminScope;
+use Illuminate\Support\Facades\Cache;
 
 class BlogPost extends Model
 {
@@ -45,6 +46,10 @@ class BlogPost extends Model
         parent::boot();
 
         // static::addGlobalScope(new LatestScope);
+
+        static::updating(function (BlogPost $blogpost) {
+            Cache::forget("blog-post-{$blogpost->id}");
+        });
 
         static::deleting(function (BlogPost $blogPost) {
             $blogPost->comments()->delete();
