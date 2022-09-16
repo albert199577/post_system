@@ -16,7 +16,7 @@ services:
 
   php:
     container_name: docker_env_php
-    image: php_composer
+    image: php_composer:2.0
     build:
       context: ./php
       dockerfile: dockerfile
