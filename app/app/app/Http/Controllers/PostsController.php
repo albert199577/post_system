@@ -186,7 +186,6 @@ class PostsController extends Controller
 
         $counter = Cache::get($counterKey);
 
-        Cache::flush();
         return view('posts.show', [
             'post' => $blogPost,
             'counter' => $counter,
