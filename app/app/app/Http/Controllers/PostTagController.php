@@ -15,9 +15,9 @@ class PostTagController extends Controller
             'posts.index',
             [
                 'posts' => $tag->blogPosts,
-                'mostCommented' => [],
-                'mostActive' => [],
-                'mostActiveUserLastMonth' => [],
+                // 'mostCommented' => [],
+                // 'mostActive' => [],
+                // 'mostActiveUserLastMonth' => [],
             ]
         );
     }
