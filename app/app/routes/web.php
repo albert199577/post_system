@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\PostTagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,7 @@ Route::get('/secret', [HomeController::class, 'secret'])
 
 Route::get('/single', [AboutController::class, '__invoke'])->name('single');
 
-
+Route::get('/posts/tag/{tag}', [PostTagController::class, 'index'])->name('posts.tags.index');
 
 Route::resource('posts', PostsController::class);
 
