@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreComment;
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 
-class CommentController extends Controller
+class PostCommentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['store']);
+    }
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -33,16 +43,22 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogPost $post, StoreComment $request)
     {
         // dd($request);
-        $comment = new Comment();
-        $comment->blog_post_id = $request->blog_post_id;
-        $comment->content = $request->content;
 
-        $comment->save();
+        $post->comments()->create([
+            'content' => $request->input('content'),
+            'user_id' => $request->user()->id
+        ]);
+        // $comment = new Comment();
+        // $comment->blog_post_id = $request->blog_post_id;
+        // $comment->content = $request->content;
 
-        return redirect()->route('posts.show', ['post' => $comment->blog_post_id]);
+        // $comment->save();
+        $request->session()->flash('status', 'Comment was created!');
+
+        return redirect()->back();
     }
 
     /**

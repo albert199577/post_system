@@ -35,8 +35,9 @@
         </x-tags>
         
         <P>Currently read by {{ $counter }}</P>
+        <hr>
         <h4>Comments</h4>
-
+        @include('posts.partials.comment')
         @forelse ($post->comments as $comment)
             <p>
                 {{ $comment->content }}
@@ -50,8 +51,6 @@
         @empty
             <p>No comments yet!</p>
         @endforelse
-
-        @include('posts.partials.comment')
 {{-- @isset($post['has_comments'])
 <div>The post has some comments ... using isset</div>
 @endisset --}}

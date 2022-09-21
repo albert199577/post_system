@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\PostTagController;
@@ -46,7 +46,8 @@ Route::resource('posts', PostsController::class);
 
 Route::post('posts/{post}', [PostsController::class, 'restore'])->name('posts.restore');
 
-Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
+// Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
+Route::resource('posts.comments', PostCommentController::class)->only(['store']);
 
 
 // Route::get('/posts', function() use ($posts) {
