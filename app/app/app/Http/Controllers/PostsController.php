@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use App\Models\User;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -114,11 +115,14 @@ class PostsController extends Controller
             dump($file->getClientMimeType());
             dump($file->getClientOriginalExtension());
 
-            // $file->store('thumbnails');
-            // dump(Storage::disk('public')->putFile('thumbnails', $file));
+            dump($file->store('thumbnails'));
+            dump(Storage::disk('public')->putFile('thumbnails', $file));
 
-            dump($file->storeAs('thumbnails', $post->id . '.' . $file->getClientOriginalExtension()));
-            dump(Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->getClientOriginalExtension()));
+            $name1 = $file->storeAs('thumbnails', $post->id . '.' . $file->getClientOriginalExtension());
+            $name2 = Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->getClientOriginalExtension());
+
+            dump(Storage::url($name1));
+            dump(Storage::disk('local')->url($name2));
         }
         die;
 
