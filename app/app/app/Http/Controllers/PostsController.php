@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
@@ -107,24 +108,26 @@ class PostsController extends Controller
         // $post->title = $validated['title'];
         // $post->content = $validated['content'];
         
-        $hasFile = $request->hasFile('thumbnail');
-        dump($hasFile);
-        if ($hasFile) {
-            $file = $request->file('thumbnail');
-            dump($file);
-            dump($file->getClientMimeType());
-            dump($file->getClientOriginalExtension());
+        // dump($hasFile);
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('thumbnails');
+            $post->image()->save(
+                Image::create(['path' => $path])
+            );
+            // dump($file);
+            // dump($file->getClientMimeType());
+            // dump($file->getClientOriginalExtension());
 
-            dump($file->store('thumbnails'));
-            dump(Storage::disk('public')->putFile('thumbnails', $file));
+            // dump($file->store('thumbnails'));
+            // dump(Storage::disk('public')->putFile('thumbnails', $file));
 
-            $name1 = $file->storeAs('thumbnails', $post->id . '.' . $file->getClientOriginalExtension());
-            $name2 = Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->getClientOriginalExtension());
+            // $name1 = $file->storeAs('thumbnails', $post->id . '.' . $file->getClientOriginalExtension());
+            // $name2 = Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->getClientOriginalExtension());
 
-            dump(Storage::url($name1));
-            dump(Storage::disk('local')->url($name2));
+            // dump(Storage::url($name1));
+            // dump(Storage::disk('local')->url($name2));
         }
-        die;
+        // die;
 
         $this->authorize($post);
 

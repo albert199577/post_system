@@ -22,6 +22,10 @@
             </x-badge>
         </h1>
         <p>{{ $post->content }}</p>
+        {{-- <img width="400" heigh="400" src="http://127.0.0.1/storage/{{ $post->image->path }}" alt=""> --}}
+        {{-- <img width="400" heigh="400" src="{{ asset($post->image->path) }}" alt=""> --}}
+        {{-- <img width="400" heigh="400" src="{{ Storage::url($post->image->path) }}" alt=""> --}}
+        <img width="400" heigh="400" src="{{ $post->image->url() }}" alt="">
         {{-- <p>Added {{ $post->created_at->diffForHumans() }}</p> --}}
         <x-updated :date="$post->created_at" :name="$post->user->name">
             Added
