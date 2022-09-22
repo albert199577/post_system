@@ -71,6 +71,7 @@ class BlogPost extends Model
 
         static::deleting(function (BlogPost $blogPost) {
             $blogPost->comments()->delete();
+            $blogPost->image()->delete();
             Cache::tags(['blog-post'])->forget("blog-post-{$blogpost->id}");
         });
 

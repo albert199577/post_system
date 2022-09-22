@@ -111,9 +111,16 @@ class PostsController extends Controller
         // dump($hasFile);
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')->store('thumbnails');
-            $post->image()->save(
-                Image::create(['path' => $path])
-            );
+            if ($post->image) {
+                Storage::delete($post->image->path);
+                $post->image->path = $path;
+                $post->image->save();
+            } else {
+                $post->image()->save(
+                    Image::create(['path' => $path])
+                );
+            }
+            
             // dump($file);
             // dump($file->getClientMimeType());
             // dump($file->getClientOriginalExtension());
