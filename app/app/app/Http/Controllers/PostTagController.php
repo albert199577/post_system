@@ -14,7 +14,12 @@ class PostTagController extends Controller
         return view(
             'posts.index',
             [
-                'posts' => $tag->blogPosts,
+                'posts' => $tag->blogPosts()
+                    ->latest()
+                    ->withCount('comments')
+                    ->with('tags')
+                    ->with('user')
+                    ->get(),
                 // 'mostCommented' => [],
                 // 'mostActive' => [],
                 // 'mostActiveUserLastMonth' => [],
