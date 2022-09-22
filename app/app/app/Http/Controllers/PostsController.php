@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -105,6 +105,23 @@ class PostsController extends Controller
         // $post = new BlogPost();
         // $post->title = $validated['title'];
         // $post->content = $validated['content'];
+        
+        $hasFile = $request->hasFile('thumbnail');
+        dump($hasFile);
+        if ($hasFile) {
+            $file = $request->file('thumbnail');
+            dump($file);
+            dump($file->getClientMimeType());
+            dump($file->getClientOriginalExtension());
+
+            // $file->store('thumbnails');
+            // dump(Storage::disk('public')->putFile('thumbnails', $file));
+
+            dump($file->storeAs('thumbnails', $post->id . '.' . $file->getClientOriginalExtension()));
+            dump(Storage::disk('local')->putFileAs('thumbnails', $file, $post->id . '.' . $file->getClientOriginalExtension()));
+        }
+        die;
+
         $this->authorize($post);
 
         // $post->save();
