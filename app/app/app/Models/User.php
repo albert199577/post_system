@@ -48,6 +48,12 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\BlogPost');
     }
 
+    public function image()
+    {
+        // return $this->hasOne('App\Models\Image');
+        return $this->morphOne('App\Models\Image', 'imageable');
+    }
+    
     public function comments()
     {
         return $this->hasMany('App\Models\Comment');
