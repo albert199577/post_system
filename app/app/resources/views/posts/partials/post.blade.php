@@ -17,7 +17,7 @@
     by {{ $post->user->name }}
 </p> --}}
 
-<x-updated :date="$post->created_at" :name="$post->user->name">
+<x-updated :date="$post->created_at" :name="$post->user->name" :userId="$post->user->id">
     Added
 </x-updated>
 

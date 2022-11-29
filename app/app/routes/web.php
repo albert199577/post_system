@@ -5,6 +5,7 @@ use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\PostTagController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -49,6 +50,7 @@ Route::post('posts/{post}', [PostsController::class, 'restore'])->name('posts.re
 // Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
 Route::resource('posts.comments', PostCommentController::class)->only(['store']);
 
+Route::resource('users', UserController::class)->only(['show', 'edit', 'update']);
 
 // Route::get('/posts', function() use ($posts) {
 //     // dd(request()->all());
