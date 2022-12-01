@@ -56,9 +56,9 @@ class PostCommentController extends Controller
         // $comment->content = $request->content;
 
         // $comment->save();
-        $request->session()->flash('status', 'Comment was created!');
+        // $request->session()->flash('status', 'Comment was created!');
 
-        return redirect()->back();
+        return redirect()->back()->withStatus('Comment was created!');
     }
 
     /**

@@ -53,10 +53,15 @@ class User extends Authenticatable
         // return $this->hasOne('App\Models\Image');
         return $this->morphOne('App\Models\Image', 'imageable');
     }
-    
+
     public function comments()
     {
         return $this->hasMany('App\Models\Comment');
+    }
+
+    public function commentsOn()
+    {
+        return $this->morphMany('App\Models\Comment', 'commentable')->latest();
     }
 
     public function scopeWithMostBlogPost(Builder $query)
