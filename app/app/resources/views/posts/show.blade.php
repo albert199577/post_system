@@ -51,20 +51,11 @@
         <P>Currently read by {{ $counter }}</P>
         <hr>
         <h4>Comments</h4>
-        @include('posts.partials.comment')
-        @forelse ($post->comments as $comment)
-            <p>
-                {{ $comment->content }}
-            </p>
-            {{-- <p class="text-muted">
-                added {{ $comment->created_at->diffForHumans() }}
-            </p> --}}
-            <x-updated :date="$comment->created_at" :name="$comment->user->name">
-                Added
-            </x-updated>
-        @empty
-            <p>No comments yet!</p>
-        @endforelse
+        <x-commentForm :route="route('posts.comments.store', ['post' => $post->id])">
+        </x-commentForm>
+
+        <x-commentList :comments="$post->comments">
+        </x-commentList>
 {{-- @isset($post['has_comments'])
 <div>The post has some comments ... using isset</div>
 @endisset --}}
