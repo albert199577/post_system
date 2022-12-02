@@ -29,7 +29,7 @@ class AddPolymprophToCommentsTable extends Migration
     public function down()
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->unsignedInteger('blog_post_id')->index();
+            $table->unsignedInteger('blog_post_id')->index()->nullable();
             $table->foreign('blog_post_id')->references('id')->on('blog_posts');
             $table->dropMorphs('commentable');
         });
