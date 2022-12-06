@@ -54,6 +54,7 @@ class PostCommentController extends Controller
             'user_id' => $request->user()->id
         ]);
 
+        // dd($comment->user->image->url());
         Mail::to($post->user)->send(
             new CommentPosted($comment)
         );

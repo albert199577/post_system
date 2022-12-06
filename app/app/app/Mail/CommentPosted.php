@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 //Comment 
 class CommentPosted extends Mailable
@@ -32,7 +33,24 @@ class CommentPosted extends Mailable
     public function build()
     {
         $subject = "Commented was posted on your {$this->comment->commentable->title} blog post";
+        $path = $this->comment->user->image->path;
         return $this
+            // first example with full path
+
+            /*
+            ->attach(
+                storage_path('app/public') . '/' . $this->comment->user->image->path,
+                [
+                    'as' => 'porfile_pricture.jpeg',
+                    'mime' => 'image/jpeg'
+                ]
+            )
+            */
+            // ->attachFromStorage($this->comment->user->image->path, 'profile_picture.jpeg')
+            // ->attachFromStorageDisk('public', $this->comment->user->image->path)
+            ->attachData(Storage::get($path), 'profile_picture_from_data.jpeg', [
+                'mime' => Storage::mimetype($path)
+            ])
             ->subject($subject)
             ->view('emails.posts.commented');
     }
