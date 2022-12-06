@@ -4,7 +4,7 @@
 </div>
 {{-- @error('title')
     <div class="alert alert-danger">{{ $message }}</div>
-@enderror --}}【
+@enderror --}}
 
 <div class="form-group">
     <label for="content">Content</label>
