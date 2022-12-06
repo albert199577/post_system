@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreComment;
+use App\Mail\CommentPosted;
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Mail;
 
 class PostCommentController extends Controller
 {
@@ -47,10 +49,14 @@ class PostCommentController extends Controller
     {
         // dd($request);
 
-        $post->comments()->create([
+        $comment = $post->comments()->create([
             'content' => $request->input('content'),
             'user_id' => $request->user()->id
         ]);
+
+        Mail::to($post->user)->send(
+            new CommentPosted($comment)
+        );
         // $comment = new Comment();
         // $comment->blog_post_id = $request->blog_post_id;
         // $comment->content = $request->content;
