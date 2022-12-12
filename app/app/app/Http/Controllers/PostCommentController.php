@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreComment;
+use App\Jobs\NotifyUsersPostWasCommented;
 use App\Mail\CommentPosted;
 use App\Mail\CommentPostedMarkdown;
 use App\Models\BlogPost;
@@ -61,10 +62,15 @@ class PostCommentController extends Controller
         // );
         $when = now()->addMinutes(1);
 
-        Mail::to($post->user)->later(
-            $when,
+        Mail::to($post->user)->queue(
             new CommentPostedMarkdown($comment)
         );
+
+        NotifyUsersPostWasCommented::dispatch($comment);
+        // Mail::to($post->user)->later(
+        //     $when,
+        //     new CommentPostedMarkdown($comment)
+        // );
         // $comment = new Comment();
         // $comment->blog_post_id = $request->blog_post_id;
         // $comment->content = $request->content;
