@@ -2,7 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Mail\CommentPostedMarkdown;
+use App\Mail\CommentPostedOnPostWatched;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,6 +35,15 @@ class NotifyUsersPostWasCommented implements ShouldQueue
      */
     public function handle()
     {
-        //
+        User::thatHasCommentedPost($this->comment->commentable)
+            ->get()
+            ->filter(function (User $user) {
+                return $user->id !== $this->comment->user_id;
+            })->map(function (User $user) {
+                ThrottledMail::dispatch(
+                    new CommentPostedOnPostWatched($this->comment, $user),
+                    $user
+                );
+            });
     }
 }
