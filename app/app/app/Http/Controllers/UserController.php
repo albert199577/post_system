@@ -90,8 +90,10 @@ class UserController extends Controller
             }
         }
         $request->session()->flash('status', 'The blog post was updated!');
+        $user->locale = $request->get('locale');
+        $user->save();
 
-        return redirect()->back()->withStatus('Profile image was update!');
+        return redirect()->back()->withStatus('Profile was update!');
     }
 
     /**

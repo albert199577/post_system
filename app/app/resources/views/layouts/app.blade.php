@@ -24,6 +24,8 @@
                 <a href="{{ route('login') }}"
                     class="mx-2">{{ __('Login') }}</a>
             @else
+                <a href="{{ route('users.show', ['user' => Auth::user()->id]) }}" class="mx-2">{{ __('Profile') }}</a>
+                <a href="{{ route('users.edit', ['user' => Auth::user()->id]) }}" class="mx-2">{{ __('Edit Profile') }}</a>
                 <a href="{{ route('logout') }}" class="mx-2"
                     onclick="event.preventDefault(); document.querySelector('#logout-form').submit();">{{ __('Logout') }} ({{ Auth::user()->name }})</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
