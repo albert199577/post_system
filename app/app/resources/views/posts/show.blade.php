@@ -48,7 +48,7 @@
 
         </x-tags>
         
-        <P>Currently read by {{ $counter }}</P>
+        <P>{{ trans_choice('messages.people.reading', $counter) }}</P>
         <hr>
         <h4>Comments</h4>
         <x-commentForm :route="route('posts.comments.store', ['post' => $post->id])">

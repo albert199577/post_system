@@ -24,11 +24,8 @@
 <x-tags :tags="$post->tags">
     
 </x-tags>
-@if ($post->comments_count)
-    <p>{{ $post->comments_count }} comments</p>
-@else
-    No comments yet!
-@endif
+
+{{ trans_choice('messages.comments', $post->comments_count) }}
 
 <div class="d-flex mb-3">
     @auth
