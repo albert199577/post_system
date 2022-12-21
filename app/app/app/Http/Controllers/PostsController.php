@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\BlogPostPosted;
+use App\Facades\CounterFacades;
 use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use App\Models\Image;
 use App\Models\User;
-use App\Services\Counter;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Storage;
 class PostsController extends Controller
 {
 
-    private $counter;
     private $posts = [
         1 => [
             'title' => 'Intro to Laravel',
@@ -40,11 +39,10 @@ class PostsController extends Controller
         ]
     ];
 
-    public function __construct(Counter $counter)
+    public function __construct()
     {   
         $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destory']);
         // $this->middleware('locale');
-        $this->counter = $counter;
     }
 
     /**
@@ -193,7 +191,7 @@ class PostsController extends Controller
 
         return view('posts.show', [
             'post' => $blogPost,
-            'counter' => $this->counter->increment("blog-post-{$id}", ['blog-post']),
+            'counter' => CounterFacades::increment("blog-post-{$id}", ['blog-post']),
         ]);
     }
 
