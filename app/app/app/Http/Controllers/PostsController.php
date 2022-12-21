@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 class PostsController extends Controller
 {
 
+    private $counter;
     private $posts = [
         1 => [
             'title' => 'Intro to Laravel',
@@ -39,10 +40,11 @@ class PostsController extends Controller
         ]
     ];
 
-    public function __construct()
+    public function __construct(Counter $counter)
     {   
         $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destory']);
         // $this->middleware('locale');
+        $this->counter = $counter;
     }
 
     /**
@@ -189,11 +191,9 @@ class PostsController extends Controller
                 ->findOrFail($id);
         });
 
-        $counter = resolve(Counter::class);
-
         return view('posts.show', [
             'post' => $blogPost,
-            'counter' => $counter->increment("blog-post-{$id}", ['blog-post']),
+            'counter' => $this->counter->increment("blog-post-{$id}", ['blog-post']),
         ]);
     }
 
