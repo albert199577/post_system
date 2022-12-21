@@ -51,7 +51,7 @@ Route::resource('posts', PostsController::class);
 Route::post('posts/{post}', [PostsController::class, 'restore'])->name('posts.restore');
 
 // Route::post('comment', [CommentController::class, 'store'])->name('comment.store');
-Route::resource('posts.comments', PostCommentController::class)->only(['store']);
+Route::resource('posts.comments', PostCommentController::class)->only(['index', 'store']);
 Route::resource('users.comments', UserCommentController::class)->only(['store']);
 
 Route::resource('users', UserController::class)->only(['show', 'edit', 'update']);
